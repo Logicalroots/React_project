@@ -1,12 +1,26 @@
+
+#main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
 h1 {
     color: #27aedb;
     text-align: center;
-    }
-    
+}
+.controls{
+    margin-bottom: 15px;
+}
 
-button{
-    color: #27aedb;
+button {
+    /* color: #27aedb; */
     text-align: center;
     justify-content: center;
     align-items: center;
+    margin: 3px;
+}
+input{
+    margin: 2px;
 }
