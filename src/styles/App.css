@@ -1,4 +1,11 @@
-
+body{
+    margin: 0;
+    padding: 0;
+    background-color: rgb(4, 4, 46);
+    color:rgb(249, 244, 238);
+    font-family: Arial, Helvetica, sans-serif;
+    letter-spacing: 1px;
+}
 #main {
     height: 100vh;
     display: flex;
@@ -6,22 +13,58 @@
     justify-content:center;
     align-items: center;
 }
-
+#heading{
+    font-size: 2.5em;
+    margin-bottom: 25px;
+    /* color: greenyellow; */
+}
+#message{
+    font-size: 1.5em;
+}
 h1 {
-    color: #27aedb;
+    /* color: #27aedb; */
+    /* color: rgb(254, 178, 193); */
     text-align: center;
 }
 .controls{
-    margin-bottom: 15px;
+    margin: 25px;
 }
 
 button {
-    /* color: #27aedb; */
+    /* color: #27aedb; */    
     text-align: center;
     justify-content: center;
     align-items: center;
     margin: 3px;
+    font-size: 1em;
+    padding:   3px 9px;
+   background-color:rgba(0, 247, 255, 0.6) ;
+   border-color:rgba(0, 247, 255, 0.6) ;
+   border-radius: 5px;
+   color: rgb(255, 255, 255);
+   font-weight:545;
+   /* border: none; */
 }
+button:hover{
+    cursor: pointer;
+    background-color:rgba(0, 247, 255, 0.849) ;
+    border-color:rgba(0, 247, 255, 0.849) ;
+    color: rgba(0, 0, 0, 0.756);
+}
+button:disabled{
+    background-color:rgba(0, 247, 255, 0.281) ;
+    border-color:rgba(0, 247, 255, 0.281) ;
+    color: rgba(240, 248, 255, 0.468);
+}
+button:disabled:hover{
+    cursor: not-allowed;
+}
+
 input{
-    margin: 2px;
+    margin-right: 10px;
+}
+#pomodoro{
+    display: flex;    
+    align-items: center;
+
 }

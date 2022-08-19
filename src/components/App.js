@@ -1,5 +1,6 @@
 import React, { Component, useEffect, useState } from "react";
 import '../styles/App.css';
+import CircularProgressTimer from "./CirculsarProgressTimer";
 
 const App = () => {
 
@@ -7,7 +8,7 @@ const App = () => {
   const [inputBreakTime, setInputBreakTime] = useState(5);
   const [min, setMin] = useState(25);
   const [sec, setSec] = useState(0);
-  const [message, setMessage] = useState("Work-Time");
+  const [message, setMessage] = useState("Work Time!");
   const [disableSet, setDisableSet] = useState(false);
   const [disableStart, setDisableStart] = useState(false);
   const [disableStop, setDisableStop] = useState(true);
@@ -17,23 +18,26 @@ const App = () => {
   const [displayTime, setDisplayTime] = useState("25:00");
   const [startFlag, setStartFlag] = useState(true);
   const [workflag, setWorkFlag] = useState(true);
+  const[settedWorkTime,setSettedWorkTime]=useState(25);
+  const[settedBreakTime,setSettedBreakTime]=useState(25); 
 
 
   useEffect(() => {
     
     if (play) {
-      if (min == -1 && sec==59 ) {
+      // console.log(min,sec);
+      if (min == -1 && sec==58 ) {
+
         //if work time is going on then workflag is true
-        setDisplayTime("00:00")
         if (workflag) {
           alert("work duration is over")
-          setMessage("Break-Time");
+          setMessage("Break Time! Next session starts in:");
           workBreakswitch(inputBreakTime,workflag);
           
         }
         else {
           alert("break duration is over")
-          setMessage("Work-Time");
+          setMessage("Work Time");
           workBreakswitch(inputWorkTime,workflag);
         }
 
@@ -44,14 +48,14 @@ const App = () => {
           const showSec = sec < 10 ? "0" + sec : sec;
           const showMin = min < 10 ? "0" + min : min;
           setDisplayTime(`${showMin}:${showSec}`);
-          setSec(sec - 1);
+          setSec(()=>sec - 1);
 
-        }, 1000)
+        },1000)
         return () => clearInterval(timer);
       }
       else {
         setStartFlag(false);
-        setMin(min - 1);
+        setMin(()=>min - 1);
         setSec(59);
 
       }
@@ -68,7 +72,7 @@ const App = () => {
     setDisplayTime(`0${newTime}:00`)
     else
     setDisplayTime(`${newTime}:00`)
-    setWorkFlag(!workflag);
+    setWorkFlag((workflag)=>!workflag);
 
     setStartFlag(true);
   }
@@ -90,7 +94,8 @@ const App = () => {
     setDisplayTime(`${showMin}:00`);
     setMin(inputWorkTime);
     setSec(0);
-
+    setSettedWorkTime(inputWorkTime);
+    setSettedBreakTime(inputBreakTime);
 
   }
 
@@ -127,15 +132,18 @@ const App = () => {
     setInputWorkTime(25);
     setInputBreakTime(5);
     setDisplayTime("25:00");
-    setMessage("Work-Time");
+    setMessage("Work Time");
     setStartFlag(true);
   }
 
 
   return (
     <div id="main">
-      <h1>{displayTime}</h1>
-      <h3>{message}</h3>
+      <h1 id="heading"> Pomodoro Timer</h1>
+      <h3 id="message">{message}</h3>
+      <CircularProgressTimer time={displayTime} workDuration={settedWorkTime} breakDuration={settedBreakTime} workflag={workflag}/>
+      {/* <h1>{displayTime}</h1> */}
+     
       <div className="controls">
         <button data-testid='start-btn' disabled={disableStart} onClick={start}>Start</button>
         <button data-testid='stop-btn' disabled={disableStop} onClick={stop} >Stop</button>
@@ -143,9 +151,15 @@ const App = () => {
       </div>
       <div className="form">
         <form action="" onSubmit={set}>
+          <label htmlFor="work-duration">Work Duration: </label>
+          
           <input id="work-duration" type="number" data-testid='work-duration' value={inputWorkTime} placeholder="work duration" onChange={(e) => setInputWorkTime(validate(e.target.value))} disabled={disableInput} required />
-
-          <input type="number" data-testid='break-duration' value={inputBreakTime} placeholder="break duration" onChange={(e) => setInputBreakTime(validate(e.target.value))} disabled={disableInput} required/>
+          
+          <label htmlFor="break-duration">Break Duration: </label>
+          
+          <input id="break-duration" type="number" data-testid='break-duration' value={inputBreakTime} placeholder="break duration" onChange={(e) => setInputBreakTime
+          (validate(e.target.value))} disabled={disableInput} required/>
+          
           <button data-testid='set-btn' disabled={disableSet} >Set</button>
         </form>
       </div>
