@@ -22,7 +22,7 @@ const App = () => {
   useEffect(() => {
     
     if (play) {
-      if (min == -1 && sec==9 ) {
+      if (min == -1 && sec==59 ) {
         //if work time is going on then workflag is true
         setDisplayTime("00:00")
         if (workflag) {
