@@ -4,8 +4,8 @@ import CircularProgressTimer from "./CirculsarProgressTimer";
 
 const App = () => {
 
-  const [inputWorkTime, setInputWorkTime] = useState(1);
-  const [inputBreakTime, setInputBreakTime] = useState(1);
+  const [inputWorkTime, setInputWorkTime] = useState(25);
+  const [inputBreakTime, setInputBreakTime] = useState(5);
   const [min, setMin] = useState(25);
   const [sec, setSec] = useState(0);
   const [message, setMessage] = useState("Work Time!");
