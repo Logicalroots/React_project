@@ -4,8 +4,8 @@ import CircularProgressTimer from "./CirculsarProgressTimer";
 
 const App = () => {
 
-  const [inputWorkTime, setInputWorkTime] = useState(25);
-  const [inputBreakTime, setInputBreakTime] = useState(5);
+  const [inputWorkTime, setInputWorkTime] = useState(1);
+  const [inputBreakTime, setInputBreakTime] = useState(1);
   const [min, setMin] = useState(25);
   const [sec, setSec] = useState(0);
   const [message, setMessage] = useState("Work Time!");
@@ -26,7 +26,7 @@ const App = () => {
     
     if (play) {
       // console.log(min,sec);
-      if (min == -1 && sec==58 ) {
+      if (min == 0 && sec==0 ) {
 
         //if work time is going on then workflag is true
         if (workflag) {
@@ -48,14 +48,14 @@ const App = () => {
           const showSec = sec < 10 ? "0" + sec : sec;
           const showMin = min < 10 ? "0" + min : min;
           setDisplayTime(`${showMin}:${showSec}`);
-          setSec(()=>sec - 1);
+          setSec((sec)=>sec - 1);
 
         },1000)
         return () => clearInterval(timer);
       }
       else {
         setStartFlag(false);
-        setMin(()=>min - 1);
+        setMin((min)=>min - 1);
         setSec(59);
 
       }
@@ -72,7 +72,7 @@ const App = () => {
     setDisplayTime(`0${newTime}:00`)
     else
     setDisplayTime(`${newTime}:00`)
-    setWorkFlag((workflag)=>!workflag);
+    setWorkFlag(!workflag);
 
     setStartFlag(true);
   }
