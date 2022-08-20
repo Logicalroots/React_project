@@ -26,7 +26,7 @@ const App = () => {
     
     if (play) {
       // console.log(min,sec);
-      if (min == 0 && sec==0 ) {
+      if (min == -1 && sec==58 ) {
 
         //if work time is going on then workflag is true
         if (workflag) {
@@ -50,7 +50,7 @@ const App = () => {
           setDisplayTime(`${showMin}:${showSec}`);
           setSec((sec)=>sec - 1);
 
-        },1000)
+        },100)
         return () => clearInterval(timer);
       }
       else {
