@@ -18,28 +18,28 @@ const App = () => {
   const [displayTime, setDisplayTime] = useState("25:00");
   const [startFlag, setStartFlag] = useState(true);
   const [workflag, setWorkFlag] = useState(true);
-  const[settedWorkTime,setSettedWorkTime]=useState(25);
-  const[settedBreakTime,setSettedBreakTime]=useState(25);
-  const[timerSpeed,setTimerSpeed]=useState(1000); 
+  const [settedWorkTime, setSettedWorkTime] = useState(25);
+  const [settedBreakTime, setSettedBreakTime] = useState(25);
+  const [timerSpeed, setTimerSpeed] = useState(1000);
 
 
   useEffect(() => {
-    
+
     if (play) {
       // console.log(min,sec);
-      if (min == -1 && sec==58 ) {
+      if (min == -1 && sec == 58) {
 
         //if work time is going on then workflag is true
         if (workflag) {
           alert("work duration is over")
           setMessage("Break Time! Next session starts in:");
-          workBreakswitch(inputBreakTime,workflag);
-          
+          workBreakswitch(inputBreakTime, workflag);
+
         }
         else {
           alert("break duration is over")
-          setMessage("Work Time");
-          workBreakswitch(inputWorkTime,workflag);
+          setMessage("Work Time!");
+          workBreakswitch(inputWorkTime, workflag);
         }
 
       }
@@ -49,30 +49,30 @@ const App = () => {
           const showSec = sec < 10 ? "0" + sec : sec;
           const showMin = min < 10 ? "0" + min : min;
           setDisplayTime(`${showMin}:${showSec}`);
-          setSec((sec)=>sec - 1);
+          setSec((sec) => sec - 1);
 
-        },timerSpeed)
+        }, timerSpeed)
         return () => clearInterval(timer);
       }
       else {
         setStartFlag(false);
-        setMin((min)=>min - 1);
+        setMin((min) => min - 1);
         setSec(59);
 
       }
 
     }
 
-  }, [sec, play, min, displayTime, startFlag,timerSpeed]);
+  }, [sec, play, min, displayTime, startFlag, timerSpeed]);
 
 
-  function workBreakswitch(newTime,workflag){
+  function workBreakswitch(newTime, workflag) {
     setMin(newTime);
     setSec(0);
-    if(newTime<10)
-    setDisplayTime(`0${newTime}:00`)
+    if (newTime < 10)
+      setDisplayTime(`0${newTime}:00`)
     else
-    setDisplayTime(`${newTime}:00`)
+      setDisplayTime(`${newTime}:00`)
     setWorkFlag(!workflag);
 
     setStartFlag(true);
@@ -85,7 +85,7 @@ const App = () => {
     setStartFlag(true);
     setDisableReset(false);
     setDisableStop(true);
-    setMessage("Work Time");
+    setMessage("Work Time!");
     setWorkFlag(true);
 
     if (inputWorkTime == 0 && inputBreakTime == 0) {
@@ -105,7 +105,7 @@ const App = () => {
 
 
   function validate(val) {
-    if (val < 0 || val=='')
+    if (val < 0 || val == '')
       return '';
     return (Math.floor(val));
     // return val
@@ -137,41 +137,45 @@ const App = () => {
     setInputBreakTime(5);
     setTimerSpeed(1000);
     setDisplayTime("25:00");
-    setMessage("Work Time");
+    setMessage("Work Time!");
     setStartFlag(true);
     setSettedWorkTime(25);
     setSettedBreakTime(5);
   }
 
-  
+
 
   return (
     <div id="main">
       <h1 id="heading"> Pomodoro Timer</h1>
       <h3 id="message">{message}</h3>
-      <CircularProgressTimer time={displayTime} workDuration={settedWorkTime} breakDuration={settedBreakTime} workflag={workflag}/>
+      <CircularProgressTimer time={displayTime} workDuration={settedWorkTime} breakDuration={settedBreakTime} workflag={workflag} />
       {/* <h1>{displayTime}</h1> */}
-     
+
       <div className="controls">
         <button data-testid='start-btn' disabled={disableStart} onClick={start}>Start</button>
         <button data-testid='stop-btn' disabled={disableStop} onClick={stop} >Stop</button>
         <button data-testid='reset-btn' disabled={disableReset} onClick={reset}>Reset</button>
       </div>
       <div className="form">
-        <form action="" onSubmit={set}>
-          <label htmlFor="work-duration">Work Duration: </label>
-          
-          <input id="work-duration" type="number" data-testid='work-duration' value={inputWorkTime} placeholder="work duration" onChange={(e) => setInputWorkTime(validate(e.target.value))} disabled={disableInput} required />
-          
-          <label htmlFor="break-duration">Break Duration: </label>
-          
-          <input id="break-duration" type="number" data-testid='break-duration' value={inputBreakTime} placeholder="break duration" onChange={(e) => setInputBreakTime
-          (validate(e.target.value))} disabled={disableInput} required/>
-
-          <label htmlFor="timer-speed">Timer Speed: </label>
-          <input type="number" value={timerSpeed} onChange={(e)=>setTimerSpeed(validate(e.target.value))} disabled={disableInput} required/><span>miliseconds</span>
+        <form action="" onSubmit={set} >
+          <div id="form-div">
+            <div className="form-element">
+              <label htmlFor="work-duration">Work Duration: </label>
+              <input id="work-duration" type="number" data-testid='work-duration' value={inputWorkTime} placeholder="work duration" onChange={(e) => setInputWorkTime(validate(e.target.value))} disabled={disableInput} required />
+            </div>
+            <div className="form-element">
+              <label htmlFor="break-duration">Break Duration: </label>
+              <input id="break-duration" type="number" data-testid='break-duration' value={inputBreakTime} placeholder="break duration" onChange={(e) => setInputBreakTime
+                (validate(e.target.value))} disabled={disableInput} required />
+            </div>
+            <div className="form-element" >
+              <label htmlFor="timer-speed">Timer Speed: </label>
+              <input type="number" id="timer-speed" value={timerSpeed} onChange={(e) => setTimerSpeed(validate(e.target.value))} disabled={disableInput} required /><span>miliseconds</span>
+            </div>
+          </div>
           <div id="set"><button data-testid='set-btn' disabled={disableSet} >Set</button></div>
-          
+
         </form>
       </div>
     </div>
