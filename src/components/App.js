@@ -50,7 +50,7 @@ const App = () => {
           setDisplayTime(`${showMin}:${showSec}`);
           setSec((sec)=>sec - 1);
 
-        },100)
+        },1000)
         return () => clearInterval(timer);
       }
       else {
