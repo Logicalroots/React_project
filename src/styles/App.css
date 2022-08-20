@@ -60,11 +60,16 @@ button:disabled:hover{
     cursor: not-allowed;
 }
 
-input{
-    margin-right: 10px;
+label{
+    margin-left: 10px;
 }
 #pomodoro{
     display: flex;    
     align-items: center;
 
+}
+#set{
+    display: flex;
+    justify-content: center;
+    margin-top: 5px;
 }

@@ -19,7 +19,8 @@ const App = () => {
   const [startFlag, setStartFlag] = useState(true);
   const [workflag, setWorkFlag] = useState(true);
   const[settedWorkTime,setSettedWorkTime]=useState(25);
-  const[settedBreakTime,setSettedBreakTime]=useState(25); 
+  const[settedBreakTime,setSettedBreakTime]=useState(25);
+  const[timerSpeed,setTimerSpeed]=useState(1000); 
 
 
   useEffect(() => {
@@ -50,7 +51,7 @@ const App = () => {
           setDisplayTime(`${showMin}:${showSec}`);
           setSec((sec)=>sec - 1);
 
-        },1000)
+        },timerSpeed)
         return () => clearInterval(timer);
       }
       else {
@@ -62,7 +63,7 @@ const App = () => {
 
     }
 
-  }, [sec, play, min, displayTime, startFlag]);
+  }, [sec, play, min, displayTime, startFlag,timerSpeed]);
 
 
   function workBreakswitch(newTime,workflag){
@@ -84,6 +85,8 @@ const App = () => {
     setStartFlag(true);
     setDisableReset(false);
     setDisableStop(true);
+    setMessage("Work Time");
+    setWorkFlag(true);
 
     if (inputWorkTime == 0 && inputBreakTime == 0) {
       reset();
@@ -102,9 +105,10 @@ const App = () => {
 
 
   function validate(val) {
-    if (val < 0)
+    if (val < 0 || val=='')
       return '';
-    return (val);
+    return (Math.floor(val));
+    // return val
   }
 
   function start() {
@@ -131,11 +135,15 @@ const App = () => {
     setSec(0);
     setInputWorkTime(25);
     setInputBreakTime(5);
+    setTimerSpeed(1000);
     setDisplayTime("25:00");
     setMessage("Work Time");
     setStartFlag(true);
+    setSettedWorkTime(25);
+    setSettedBreakTime(5);
   }
 
+  
 
   return (
     <div id="main">
@@ -159,8 +167,11 @@ const App = () => {
           
           <input id="break-duration" type="number" data-testid='break-duration' value={inputBreakTime} placeholder="break duration" onChange={(e) => setInputBreakTime
           (validate(e.target.value))} disabled={disableInput} required/>
+
+          <label htmlFor="timer-speed">Timer Speed: </label>
+          <input type="number" value={timerSpeed} onChange={(e)=>setTimerSpeed(validate(e.target.value))} disabled={disableInput} required/><span>miliseconds</span>
+          <div id="set"><button data-testid='set-btn' disabled={disableSet} >Set</button></div>
           
-          <button data-testid='set-btn' disabled={disableSet} >Set</button>
         </form>
       </div>
     </div>
